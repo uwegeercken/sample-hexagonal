@@ -12,7 +12,7 @@ public class InMemoryPersonRepository implements PersonRepository
     @Override
     public void save(Person person)
     {
-        persons.put(1, person);
+        persons.put(1L, person);
     }
 
     @Override
