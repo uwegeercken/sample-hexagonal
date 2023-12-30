@@ -1,19 +1,22 @@
 package com.datamelt.adapter.in;
 
-import com.datamelt.domain.model.Person;
-import com.datamelt.port.in.person.FindPersonUseCase;
+import com.datamelt.adapter.model.TestRequest;
+import com.datamelt.adapter.out.InMemoryPersonRepository;
+import com.datamelt.domain.FindPersonService;
+
+import java.util.List;
 
 public class TestAdapter
 {
-    private final FindPersonUseCase findPersonUseCase;
+    List<TestRequest> requests = List.of(
+            new TestRequest("Lipton", "Larry"),
+            new TestRequest("Ponty", "Paul")
+    );
 
-    public TestAdapter(FindPersonUseCase findPersonUseCase)
-    {
-        this.findPersonUseCase = findPersonUseCase;
-    }
+    private final TestAdapterService testAdapterService = new TestAdapterService();
 
-    public void findPerson()
+    public void testFindPersons()
     {
-        Person person = findPersonUseCase.findByName("Geercken", "Uwe");
+        requests.forEach(request -> testAdapterService.findByName(request).ifPresentOrElse(System.out::println,() -> System.out.println("not found: " + request.getFullname())));
     }
 }

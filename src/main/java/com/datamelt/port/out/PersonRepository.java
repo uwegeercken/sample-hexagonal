@@ -2,8 +2,10 @@ package com.datamelt.port.out;
 
 import com.datamelt.domain.model.Person;
 
+import java.util.Optional;
+
 public interface PersonRepository
 {
-    void save(Person person);
-    Person findByName(String lastname, String firstname);
+    int save(Person person);
+    Optional<Person> findByName(String lastname, String firstname);
 }

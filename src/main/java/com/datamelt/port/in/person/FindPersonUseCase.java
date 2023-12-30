@@ -2,7 +2,10 @@ package com.datamelt.port.in.person;
 
 import com.datamelt.domain.model.Person;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 public interface FindPersonUseCase
 {
-    Person findByName(String lastname, String firstname);
+    Optional<Person> findByName(String lastname, String firstname);
 }
