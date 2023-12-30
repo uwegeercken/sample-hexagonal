@@ -2,3 +2,4 @@
 
 Sample Hexagonal Application
 
+## General
