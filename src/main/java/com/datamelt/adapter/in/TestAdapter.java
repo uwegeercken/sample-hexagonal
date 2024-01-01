@@ -1,26 +1,22 @@
 package com.datamelt.adapter.in;
 
 import com.datamelt.adapter.model.PersonDto;
-import com.datamelt.adapter.model.FindPersonRequest;
-import com.datamelt.domain.model.Person;
-import com.datamelt.port.in.person.PersonUseCase;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class TestAdapter
 {
-    private final List<FindPersonRequest> requests = List.of(
-            new FindPersonRequest("Lipton", "Larry"),
-            new FindPersonRequest("Kube", "Mary"),
-            new FindPersonRequest("Ponty", "Paul"),
-            new FindPersonRequest("Pragger", "Jill"),
-            new FindPersonRequest("Mason", "Bill")
+    private final List<SamplePerson> requests = List.of(
+            new SamplePerson("Lipton", "Larry"),
+            new SamplePerson("Kube", "Mary"),
+            new SamplePerson("Ponty", "Paul"),
+            new SamplePerson("Pragger", "Jill"),
+            new SamplePerson("Mason", "Bill")
     );
 
     private final TestAdapterService testAdapterService;
 
-    public TestAdapter(PersonUseCase personUseCase, TestAdapterService testAdapterService)
+    public TestAdapter(TestAdapterService testAdapterService)
     {
         this.testAdapterService = testAdapterService;
     }

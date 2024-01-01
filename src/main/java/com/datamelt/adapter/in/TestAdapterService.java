@@ -1,7 +1,6 @@
 package com.datamelt.adapter.in;
 
 import com.datamelt.adapter.model.PersonDto;
-import com.datamelt.adapter.model.FindPersonRequest;
 import com.datamelt.domain.model.Person;
 import com.datamelt.port.in.person.PersonUseCase;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,24 +20,24 @@ public class TestAdapterService
         this.objectMapper = objectMapper;
     }
 
-    public PersonDto findByName(FindPersonRequest findPersonRequest)
+    public PersonDto findByName(SamplePerson samplePerson)
     {
 
-        Optional<Person> person = personUseCase.findByName(findPersonRequest.lastname(), findPersonRequest.firstname());
+        Optional<Person> person = personUseCase.findByName(samplePerson.lastname(), samplePerson.firstname());
         if(person.isPresent())
         {
-            return personMapper.getPersonDto(person.get(),"found");
+            return personMapper.getPersonDto(person.get(),Status.FOUND);
         }
         else
         {
-            return personMapper.getPersonDto(new Person(findPersonRequest.lastname(), findPersonRequest.firstname()),"not found");
+            return personMapper.getPersonDto(new Person(samplePerson.lastname(), samplePerson.firstname()),Status.NOT_FOUND);
         }
     }
 
     public PersonDto createPerson(String lastname, String firstname, String dateOfBirth)
     {
         Person person = personUseCase.save(personMapper.getPerson(lastname, firstname, dateOfBirth));
-        return personMapper.getPersonDto(person, "created");
+        return personMapper.getPersonDto(person, Status.CREATED);
     }
 
     public PersonDto deletePersonByName(String lastname, String firstname)
@@ -46,11 +45,11 @@ public class TestAdapterService
         Optional<Person> person = personUseCase.deleteByName(lastname, firstname);
         if(person.isPresent())
         {
-            return personMapper.getPersonDto(person.get(), "deleted");
+            return personMapper.getPersonDto(person.get(), Status.DELETED);
         }
         else
         {
-            return personMapper.getPersonDto(new Person(lastname, firstname),"not found");
+            return personMapper.getPersonDto(new Person(lastname, firstname),Status.NOT_FOUND);
         }
     }
 }

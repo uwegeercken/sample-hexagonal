@@ -1,6 +1,7 @@
 package com.datamelt.adapter.model;
 
-public record PersonDto(int id, String lastname, String firstname, int age, String status)
-{
+import com.datamelt.adapter.in.Status;
 
+public record PersonDto(int id, String lastname, String firstname, int age, Status status)
+{
 }

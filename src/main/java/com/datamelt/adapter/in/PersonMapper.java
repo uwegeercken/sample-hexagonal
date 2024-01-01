@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class PersonMapper
 {
-    public PersonDto getPersonDto(Person person, String status)
+    public PersonDto getPersonDto(Person person, Status status)
     {
         return new PersonDto(person.getId(), person.getLastname(), person.getFirstname(), person.getAge(), status);
     }
