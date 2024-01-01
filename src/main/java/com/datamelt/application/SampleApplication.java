@@ -18,6 +18,8 @@ public class SampleApplication
         final TestAdapter testAdapter = easyDI.getInstance(TestAdapter.class);
         testAdapter.testFindPersons();
 
+        testAdapter.testCreatePerson();
+
     }
 
     private static void setupDI()

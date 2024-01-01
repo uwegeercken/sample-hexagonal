@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface FindPersonUseCase
 {
     Optional<Person> findByName(String lastname, String firstname);
+    int save(Person person);
 }

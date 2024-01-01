@@ -1,16 +1,18 @@
 package com.datamelt.adapter.in;
 
-import com.datamelt.adapter.model.TestRequest;
+import com.datamelt.adapter.model.CreatePersonDto;
+import com.datamelt.adapter.model.FindPersonRequest;
 import com.datamelt.port.in.person.FindPersonUseCase;
 
 import java.util.List;
 
 public class TestAdapter
 {
-    private final List<TestRequest> requests = List.of(
-            new TestRequest("Lipton", "Larry"),
-            new TestRequest("Ponty", "Paul"),
-            new TestRequest("Pragger", "Jill")
+    private final List<FindPersonRequest> requests = List.of(
+            new FindPersonRequest("Lipton", "Larry"),
+            new FindPersonRequest("Ponty", "Paul"),
+            new FindPersonRequest("Pragger", "Jill"),
+            new FindPersonRequest("Mason", "Bill")
     );
 
     private final TestAdapterService testAdapterService;
@@ -24,7 +26,14 @@ public class TestAdapter
     public void testFindPersons()
     {
         requests.forEach(request ->
-                testAdapterService.findByName(request).ifPresentOrElse(System.out::println,() ->
-                    System.out.println("requested person not found: " + request.getFullname())));
+                testAdapterService.findByName(request).ifPresentOrElse(findPersonDto -> System.out.println("found person    : " + findPersonDto),() ->
+                    System.out.println("person not found: " + request.getFullname())));
+    }
+
+    public void testCreatePerson()
+    {
+        CreatePersonDto createPersonDto = new CreatePersonDto("Hendriks", "Billie","1964-07-03");
+        int personId = testAdapterService.createPerson(createPersonDto);
+        System.out.println("person created  : " + createPersonDto.getFullname() + " - with id: " + personId);
     }
 }

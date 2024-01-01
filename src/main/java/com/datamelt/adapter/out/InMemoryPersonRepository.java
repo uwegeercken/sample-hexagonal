@@ -5,6 +5,7 @@ import com.datamelt.port.out.PersonRepository;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -12,19 +13,22 @@ public class InMemoryPersonRepository implements PersonRepository
 {
     private final Map<Integer, Person> persons = new HashMap<>();
 
+    private List<Person> samplePersons = List.of(
+            new Person("Lipton", "Larry", LocalDate.of(1965,4,17)),
+            new Person("Kube", "Mary", LocalDate.of(1997,1,2)),
+            new Person("Mason", "Bill", LocalDate.of(1977,8,27)),
+            new Person("Carlson", "Carl", LocalDate.of(1981,5,21)),
+            new Person("Straight", "Josephine", LocalDate.of(1971,11,2))
+    );
+
     public InMemoryPersonRepository()
     {
         loadPersons();
     }
 
-    public void loadPersons()
+    private void loadPersons()
     {
-        Person p1 = new Person("Lipton", "Larry", LocalDate.of(1965,4,17));
-        save(p1);
-
-        Person p2 = new Person("Kube", "Mary", LocalDate.of(1997,1,2));
-        save(p2);
-
+        samplePersons.forEach(this::save);
     }
 
     @Override

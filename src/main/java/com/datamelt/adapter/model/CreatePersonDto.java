@@ -1,6 +1,6 @@
 package com.datamelt.adapter.model;
 
-public record TestRequest(String lastname, String firstname)
+public record CreatePersonDto(String lastname, String firstname, String dateOfBirth)
 {
     public String getFullname()
     {

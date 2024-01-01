@@ -20,4 +20,10 @@ public class FindPersonService implements FindPersonUseCase
     {
         return personRepository.findByName(lastname, firstname);
     }
+
+    @Override
+    public int save(Person person)
+    {
+        return personRepository.save(person);
+    }
 }
