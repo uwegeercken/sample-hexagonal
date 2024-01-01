@@ -4,6 +4,7 @@ import com.datamelt.adapter.model.PersonDto;
 import com.datamelt.adapter.model.FindPersonRequest;
 import com.datamelt.domain.model.Person;
 import com.datamelt.port.in.person.PersonUseCase;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Optional;
 
@@ -11,14 +12,16 @@ public class TestAdapterService
 {
     private final PersonUseCase personUseCase;
     private final PersonMapper personMapper;
+    private final ObjectMapper objectMapper;
 
-    public TestAdapterService(PersonUseCase personUseCase, PersonMapper personMapper)
+    public TestAdapterService(PersonUseCase personUseCase, PersonMapper personMapper, ObjectMapper objectMapper)
     {
         this.personUseCase = personUseCase;
         this.personMapper = personMapper;
+        this.objectMapper = objectMapper;
     }
 
-    public String findByName(FindPersonRequest findPersonRequest)
+    public PersonDto findByName(FindPersonRequest findPersonRequest)
     {
 
         Optional<Person> person = personUseCase.findByName(findPersonRequest.lastname(), findPersonRequest.firstname());
@@ -32,13 +35,13 @@ public class TestAdapterService
         }
     }
 
-    public String createPerson(String lastname, String firstname, String dateOfBirth)
+    public PersonDto createPerson(String lastname, String firstname, String dateOfBirth)
     {
-        Person person = personUseCase.save(PersonMapper.getPerson(lastname, firstname, dateOfBirth));
+        Person person = personUseCase.save(personMapper.getPerson(lastname, firstname, dateOfBirth));
         return personMapper.getPersonDto(person, "created");
     }
 
-    public String deletePersonByName(String lastname, String firstname)
+    public PersonDto deletePersonByName(String lastname, String firstname)
     {
         Optional<Person> person = personUseCase.deleteByName(lastname, firstname);
         if(person.isPresent())

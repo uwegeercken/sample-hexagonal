@@ -34,19 +34,19 @@ public class TestAdapter
     public void testCreatePerson()
     {
 
-        String personDto = testAdapterService.createPerson("Hendriks", "Billie", "1964-07-03");
+        PersonDto personDto = testAdapterService.createPerson("Hendriks", "Billie", "1964-07-03");
         System.out.println("person create  : " + personDto);
     }
 
     public void testDeletePersonByName()
     {
-        String personDto = testAdapterService.deletePersonByName("Hendriks", "Billie");
+        PersonDto personDto = testAdapterService.deletePersonByName("Hendriks", "Billie");
         System.out.println("person delete  : " + personDto );
     }
 
     public void testDeleteNonExistingPersonByName()
     {
-        String personDto = testAdapterService.deletePersonByName("Hello", "Hugo");
+        PersonDto personDto = testAdapterService.deletePersonByName("Hello", "Hugo");
         System.out.println("person delete  : " + personDto );
     }
 }

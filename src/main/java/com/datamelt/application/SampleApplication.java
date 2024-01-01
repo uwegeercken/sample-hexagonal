@@ -18,12 +18,9 @@ public class SampleApplication
 
         final TestAdapter testAdapter = easyDI.getInstance(TestAdapter.class);
         testAdapter.testFindPersons();
-
         testAdapter.testCreatePerson();
-
         testAdapter.testDeletePersonByName();
         testAdapter.testDeleteNonExistingPersonByName();
-
     }
 
     private static void setupDI()
@@ -32,6 +29,5 @@ public class SampleApplication
         easyDI.bindInterface(PersonUseCase.class, PersonService.class);
         easyDI.bindInterface(PersonRepository.class, InMemoryPersonRepository.class);
         easyDI.bindInstance(ObjectMapper.class, new ObjectMapper());
-
     }
 }
