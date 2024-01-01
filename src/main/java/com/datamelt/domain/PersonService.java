@@ -1,17 +1,16 @@
 package com.datamelt.domain;
 
-import com.datamelt.application.SampleApplication;
 import com.datamelt.domain.model.Person;
-import com.datamelt.port.in.person.FindPersonUseCase;
+import com.datamelt.port.in.person.PersonUseCase;
 import com.datamelt.port.out.PersonRepository;
 
 import java.util.Optional;
 
-public class FindPersonService implements FindPersonUseCase
+public class PersonService implements PersonUseCase
 {
     private final PersonRepository personRepository;
 
-    public FindPersonService(PersonRepository personRepository)
+    public PersonService(PersonRepository personRepository)
     {
         this.personRepository = personRepository;
     }
@@ -25,5 +24,11 @@ public class FindPersonService implements FindPersonUseCase
     public int save(Person person)
     {
         return personRepository.save(person);
+    }
+
+    @Override
+    public void delete(Person person)
+    {
+        personRepository.delete(person);
     }
 }

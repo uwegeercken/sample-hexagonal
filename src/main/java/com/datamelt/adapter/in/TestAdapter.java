@@ -1,8 +1,9 @@
 package com.datamelt.adapter.in;
 
 import com.datamelt.adapter.model.CreatePersonDto;
+import com.datamelt.adapter.model.FindPersonDto;
 import com.datamelt.adapter.model.FindPersonRequest;
-import com.datamelt.port.in.person.FindPersonUseCase;
+import com.datamelt.port.in.person.PersonUseCase;
 
 import java.util.List;
 
@@ -18,9 +19,9 @@ public class TestAdapter
     private final TestAdapterService testAdapterService;
 
 
-    public TestAdapter(FindPersonUseCase findPersonUseCase)
+    public TestAdapter(PersonUseCase personUseCase)
     {
-        this.testAdapterService = new TestAdapterService(findPersonUseCase);
+        this.testAdapterService = new TestAdapterService(personUseCase);
     }
 
     public void testFindPersons()
@@ -35,5 +36,12 @@ public class TestAdapter
         CreatePersonDto createPersonDto = new CreatePersonDto("Hendriks", "Billie","1964-07-03");
         int personId = testAdapterService.createPerson(createPersonDto);
         System.out.println("person created  : " + createPersonDto.getFullname() + " - with id: " + personId);
+    }
+
+    public void testDeletePerson()
+    {
+        FindPersonDto findPersonDto = new FindPersonDto("Hendriks", "Billie",0);
+        testAdapterService.deletePerson(findPersonDto);
+        System.out.println("person deleted  : " + findPersonDto.getFullname() );
     }
 }

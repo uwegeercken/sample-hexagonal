@@ -7,5 +7,6 @@ import java.util.Optional;
 public interface PersonRepository
 {
     int save(Person person);
+    void delete(Person person);
     Optional<Person> findByName(String lastname, String firstname);
 }

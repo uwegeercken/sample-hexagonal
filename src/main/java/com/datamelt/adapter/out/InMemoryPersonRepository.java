@@ -39,6 +39,13 @@ public class InMemoryPersonRepository implements PersonRepository
         return personId;
     }
 
+    @Override
+    public void delete(Person person)
+    {
+        findIdByName(person.getLastname(), person.getFirstname())
+                .ifPresent(persons::remove);
+    }
+
     private Optional<Integer> findIdByName(String lastname, String firstname)
     {
         return persons.entrySet()
