@@ -11,9 +11,9 @@ public class FindPersonService implements FindPersonUseCase
 {
     private final PersonRepository personRepository;
 
-    public FindPersonService()
+    public FindPersonService(PersonRepository personRepository)
     {
-        this.personRepository = SampleApplication.getPersonRepository();
+        this.personRepository = personRepository;
     }
     @Override
     public Optional<Person> findByName(String lastname, String firstname)

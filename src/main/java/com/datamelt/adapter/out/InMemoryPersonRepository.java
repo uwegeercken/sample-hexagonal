@@ -4,13 +4,13 @@ import com.datamelt.domain.model.Person;
 import com.datamelt.port.out.PersonRepository;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryPersonRepository implements PersonRepository
 {
-    private final Map<Integer, Person> persons = new ConcurrentHashMap<>();
+    private final Map<Integer, Person> persons = new HashMap<>();
 
     public InMemoryPersonRepository()
     {

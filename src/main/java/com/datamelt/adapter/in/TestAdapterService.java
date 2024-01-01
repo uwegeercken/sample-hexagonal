@@ -12,9 +12,9 @@ public class TestAdapterService
 {
     private final FindPersonUseCase findPersonUseCase;
 
-    public TestAdapterService()
+    public TestAdapterService(FindPersonUseCase findPersonUseCase)
     {
-        this.findPersonUseCase = SampleApplication.getFindPersonUseCase();
+        this.findPersonUseCase = findPersonUseCase;
     }
 
     public Optional<FindPersonDto> findByName(TestRequest testRequest)
@@ -22,6 +22,4 @@ public class TestAdapterService
         Optional<Person> person = findPersonUseCase.findByName(testRequest.lastname(), testRequest.firstname());
         return person.map(FindPersonMapper::getFindPersonDto);
     }
-
-
 }

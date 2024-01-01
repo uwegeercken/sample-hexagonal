@@ -9,6 +9,14 @@
     <version>1.0-SNAPSHOT</version>
     <name>sample-hexagonal</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>eu.lestard</groupId>
+            <artifactId>easy-di</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <finalName>sample-hexagonal</finalName>
         <plugins>
