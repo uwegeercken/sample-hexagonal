@@ -6,6 +6,7 @@ import java.time.Period;
 
 public class Person
 {
+    private int id;
     private final String lastname;
     private final String firstname;
     private LocalDate dateOfBirth;
@@ -38,9 +39,26 @@ public class Person
         return dateOfBirth;
     }
 
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
     public int getAge()
     {
-        return Period.between(dateOfBirth, LocalDate.now()).getYears();
+        if(dateOfBirth!=null)
+        {
+            return Period.between(dateOfBirth, LocalDate.now()).getYears();
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     public String getFullname()

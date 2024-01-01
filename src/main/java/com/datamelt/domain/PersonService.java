@@ -21,14 +21,14 @@ public class PersonService implements PersonUseCase
     }
 
     @Override
-    public int save(Person person)
+    public Person save(Person person)
     {
         return personRepository.save(person);
     }
 
     @Override
-    public void delete(Person person)
+    public Optional<Person> deleteByName(String lastname, String firstname)
     {
-        personRepository.delete(person);
+        return personRepository.deleteByName(lastname, firstname);
     }
 }

@@ -32,18 +32,24 @@ public class InMemoryPersonRepository implements PersonRepository
     }
 
     @Override
-    public int save(Person person)
+    public Person save(Person person)
     {
         int personId = findIdByName(person.getLastname(), person.getFirstname()).orElseGet(persons::size);
+        person.setId(personId);
         persons.put(personId, person);
-        return personId;
+        return person;
     }
 
     @Override
-    public void delete(Person person)
+    public Optional<Person> deleteByName(String lastname, String firstname)
     {
-        findIdByName(person.getLastname(), person.getFirstname())
-                .ifPresent(persons::remove);
+        Optional<Person> deletePerson = persons.values()
+                .stream()
+                .filter(selectedPerson -> selectedPerson.hasEqualName(lastname, firstname))
+                .findFirst();
+
+        deletePerson.ifPresent(value -> persons.remove(value.getId()));
+        return deletePerson;
     }
 
     private Optional<Integer> findIdByName(String lastname, String firstname)

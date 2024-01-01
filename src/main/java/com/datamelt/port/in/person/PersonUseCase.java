@@ -7,6 +7,6 @@ import java.util.Optional;
 public interface PersonUseCase
 {
     Optional<Person> findByName(String lastname, String firstname);
-    int save(Person person);
-    void delete(Person person);
+    Person save(Person person);
+    Optional<Person> deleteByName(String lastname, String firstname);
 }

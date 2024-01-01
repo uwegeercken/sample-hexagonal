@@ -5,6 +5,7 @@ import com.datamelt.adapter.out.InMemoryPersonRepository;
 import com.datamelt.domain.PersonService;
 import com.datamelt.port.in.person.PersonUseCase;
 import com.datamelt.port.out.PersonRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.lestard.easydi.EasyDI;
 
 public class SampleApplication
@@ -20,7 +21,8 @@ public class SampleApplication
 
         testAdapter.testCreatePerson();
 
-        testAdapter.testDeletePerson();
+        testAdapter.testDeletePersonByName();
+        testAdapter.testDeleteNonExistingPersonByName();
 
     }
 
@@ -29,5 +31,7 @@ public class SampleApplication
         easyDI = new EasyDI();
         easyDI.bindInterface(PersonUseCase.class, PersonService.class);
         easyDI.bindInterface(PersonRepository.class, InMemoryPersonRepository.class);
+        easyDI.bindInstance(ObjectMapper.class, new ObjectMapper());
+
     }
 }

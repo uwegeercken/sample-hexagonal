@@ -1,16 +1,18 @@
 package com.datamelt.adapter.in;
 
-import com.datamelt.adapter.model.CreatePersonDto;
-import com.datamelt.adapter.model.FindPersonDto;
+import com.datamelt.adapter.model.PersonDto;
 import com.datamelt.adapter.model.FindPersonRequest;
+import com.datamelt.domain.model.Person;
 import com.datamelt.port.in.person.PersonUseCase;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class TestAdapter
 {
     private final List<FindPersonRequest> requests = List.of(
             new FindPersonRequest("Lipton", "Larry"),
+            new FindPersonRequest("Kube", "Mary"),
             new FindPersonRequest("Ponty", "Paul"),
             new FindPersonRequest("Pragger", "Jill"),
             new FindPersonRequest("Mason", "Bill")
@@ -18,30 +20,33 @@ public class TestAdapter
 
     private final TestAdapterService testAdapterService;
 
-
-    public TestAdapter(PersonUseCase personUseCase)
+    public TestAdapter(PersonUseCase personUseCase, TestAdapterService testAdapterService)
     {
-        this.testAdapterService = new TestAdapterService(personUseCase);
+        this.testAdapterService = testAdapterService;
     }
 
     public void testFindPersons()
     {
         requests.forEach(request ->
-                testAdapterService.findByName(request).ifPresentOrElse(findPersonDto -> System.out.println("found person    : " + findPersonDto),() ->
-                    System.out.println("person not found: " + request.getFullname())));
+                System.out.println("person search  : " + testAdapterService.findByName(request)));
     }
 
     public void testCreatePerson()
     {
-        CreatePersonDto createPersonDto = new CreatePersonDto("Hendriks", "Billie","1964-07-03");
-        int personId = testAdapterService.createPerson(createPersonDto);
-        System.out.println("person created  : " + createPersonDto.getFullname() + " - with id: " + personId);
+
+        String personDto = testAdapterService.createPerson("Hendriks", "Billie", "1964-07-03");
+        System.out.println("person create  : " + personDto);
     }
 
-    public void testDeletePerson()
+    public void testDeletePersonByName()
     {
-        FindPersonDto findPersonDto = new FindPersonDto("Hendriks", "Billie",0);
-        testAdapterService.deletePerson(findPersonDto);
-        System.out.println("person deleted  : " + findPersonDto.getFullname() );
+        String personDto = testAdapterService.deletePersonByName("Hendriks", "Billie");
+        System.out.println("person delete  : " + personDto );
+    }
+
+    public void testDeleteNonExistingPersonByName()
+    {
+        String personDto = testAdapterService.deletePersonByName("Hello", "Hugo");
+        System.out.println("person delete  : " + personDto );
     }
 }

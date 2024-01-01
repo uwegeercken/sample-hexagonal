@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface PersonRepository
 {
-    int save(Person person);
-    void delete(Person person);
+    Person save(Person person);
+    Optional<Person> deleteByName(String lastname, String firstname);
     Optional<Person> findByName(String lastname, String firstname);
 }
