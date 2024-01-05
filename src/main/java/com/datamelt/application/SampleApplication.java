@@ -19,19 +19,30 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SampleApplication
 {
+    // easyDI dependency injection
     private static EasyDI easyDI;
-    private static Map<ProgramArgument,String> configuration;
+    private static Map<ProgramArgument,String> programArguments;
+
+    // mappers for program arguments
+    private static Function<String[], ProgramArgument> keyMapper = stringArray -> ProgramArgument.valueOf(stringArray[0].toUpperCase());
+    private static Function<String[], String> valueMapper = stringArray -> stringArray[1];
 
     public static void main(String[] args) throws Exception
     {
-        configuration = processProgramArguments(args);
+        // process program arguments
+        programArguments = processProgramArguments(args);
 
+        // process configuration from yaml file
+        MainConfiguration programConfiguration = loadConfiguration();
+
+        SampleApplication application = new SampleApplication();
         // setup dependency injection
-        setupDI();
+        application.setupDI(programConfiguration);
 
         final TestAdapter testAdapter = easyDI.getInstance(TestAdapter.class);
         testAdapter.testFindPersons();
@@ -42,19 +53,20 @@ public class SampleApplication
 
     private static Map<ProgramArgument,String> processProgramArguments(String[] args)
     {
-            return Arrays.stream(args)
-                    .map(argument -> argument.split("="))
-                    .filter(argument -> argument.length==2)
-                    .collect(Collectors.toMap(argument-> ProgramArgument.valueOf(argument[0].toUpperCase()), argument->argument[1]));
+
+        return Arrays.stream(args)
+                .map(argument -> argument.split("="))
+                .filter(argument -> argument.length==2)
+                .collect(Collectors.toMap(keyMapper, valueMapper));
     }
 
-    private static void setupDI()
+    private void setupDI(MainConfiguration mainConfiguration)
     {
         easyDI = new EasyDI();
         easyDI.bindInterface(PersonUseCase.class, PersonService.class);
         easyDI.bindInterface(PersonRepository.class, InMemoryPersonRepository.class);
         easyDI.bindInstance(ObjectMapper.class, new ObjectMapper());
-        easyDI.bindProvider(MainConfiguration.class, SampleApplication::loadConfiguration);
+        easyDI.bindInstance(MainConfiguration.class, mainConfiguration);
     }
 
     private static MainConfiguration loadConfiguration()
@@ -64,7 +76,7 @@ public class SampleApplication
         mapper.enable(DeserializationFeature.USE_LONG_FOR_INTS);
         try
         {
-            return mapper.readValue(new File(configuration.get(ProgramArgument.CONFIG)), MainConfiguration.class);
+            return mapper.readValue(new File(programArguments.get(ProgramArgument.CONFIG)), MainConfiguration.class);
         }
         catch (StreamReadException e)
         {

@@ -24,7 +24,7 @@ public class TestAdapter
     public void testFindPersons()
     {
         requests.forEach(request ->
-                System.out.println("person search  : " + testAdapterService.findByName(request)));
+                System.out.println("person search  : " + testAdapterService.findByName(request.lastname(), request.firstname())));
     }
 
     public void testCreatePerson()

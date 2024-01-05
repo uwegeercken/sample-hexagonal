@@ -20,17 +20,17 @@ public class TestAdapterService
         this.objectMapper = objectMapper;
     }
 
-    public PersonDto findByName(SamplePerson samplePerson)
+    public PersonDto findByName(String lastname, String firstname)
     {
 
-        Optional<Person> person = personUseCase.findByName(samplePerson.lastname(), samplePerson.firstname());
+        Optional<Person> person = personUseCase.findByName(lastname, firstname);
         if(person.isPresent())
         {
             return personMapper.getPersonDto(person.get(),Status.FOUND);
         }
         else
         {
-            return personMapper.getPersonDto(new Person(samplePerson.lastname(), samplePerson.firstname()),Status.NOT_FOUND);
+            return personMapper.getPersonDto(new Person(lastname, firstname),Status.NOT_FOUND);
         }
     }
 

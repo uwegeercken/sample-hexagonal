@@ -18,7 +18,8 @@ public class InMemoryPersonRepository implements PersonRepository
             new Person("Kube", "Mary", LocalDate.of(1997,1,2)),
             new Person("Mason", "Bill", LocalDate.of(1977,8,27)),
             new Person("Carlson", "Carl", LocalDate.of(1981,5,21)),
-            new Person("Straight", "Josephine", LocalDate.of(1971,11,2))
+            new Person("Straight", "Josephine", LocalDate.of(1971,11,2)),
+            new Person("Gaga", "Judith", LocalDate.of(2005, 6,16))
     );
 
     public InMemoryPersonRepository()
